@@ -6,7 +6,7 @@ function resolve(dir) {
     return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template' // page title
+const name = defaultSettings.title || '人力资源管理系统' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -36,6 +36,12 @@ module.exports = {
             warnings: false,
             errors: true
         },
+        proxy: { //配置反向代理
+            '/api': {
+                target: 'http://ihrm-java.itheima.net/',
+                changeOrigin: true //跨域
+            }
+        }
         //before: require('./mock/mock-server.js')
     },
     configureWebpack: {
