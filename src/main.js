@@ -13,6 +13,7 @@ import store from './store'
 import router from './router'
 import Components from '@/components'
 import * as filters from '@/filters'
+import checkPermission from './mixin/checkPermission'
 
 import * as directives from '@/directives'
 import '@/icons' // icon
@@ -42,7 +43,13 @@ Object.keys(directives).forEach(key => {
 Object.keys(filters).forEach(key => {
   Vue.filter(key, filters[key]) //注册自定义过滤器
 })
-Vue.use(Components) //注册组件
+
+//注册组件
+Vue.use(Components)
+
+//全局混入 所有的组件都拥有了checkPermission方法
+Vue.mixin(checkPermission)
+
 Vue.config.productionTip = false
 
 new Vue({

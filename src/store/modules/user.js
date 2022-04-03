@@ -1,6 +1,6 @@
 import { getToken, setToken, removeToken, setTimeStamp } from '@/utils/auth'
 import { login, getUserInfo, getUserDetailsById } from '@/api/user'
-import { get } from 'js-cookie';
+import { resetRouter } from '@/router';
 
 const state = {
   token: getToken(), //共享token 初始化vuex时 从缓存读取
@@ -36,8 +36,15 @@ const actions = {
     return result; //权限管理需要
   },
   logOut (context) {
+    //删除token
     context.commit('removeToken');
+    //删除资料
     context.commit('removeUserInfo');
+    //重置路由
+    resetRouter()
+    //权限模块下的路由重置 由于加了命名空间 子模块不能直接调用子模块
+    //利用父模块调用子模块
+    context.commit('permission/setRoutes', [], { root: true })
   }
 }
 export default {
